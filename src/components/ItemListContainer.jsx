@@ -38,6 +38,7 @@ const ItemListContainer = ({ greeting }) => {
                 {products.map((product) => {
                     return (
                         <ItemCard
+                            key={product.id}
                             image={product.thumbnail}
                             title={product.title}
                             description={product.description}

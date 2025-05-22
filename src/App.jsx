@@ -1,18 +1,18 @@
 import React from 'react';
-import { Box, ChakraProvider } from '@chakra-ui/react';
-import NavBar from './components/NavBar';
+import { ChakraProvider, Button } from '@chakra-ui/react';
 import ItemListContainer from './components/ItemListContainer';
+import MainLayout from './layouts/MainLayout';
 
 
 const App = () => {
-  return (
-    <ChakraProvider>
-      <Box height="100vh">
-        <NavBar />
-        <ItemListContainer greeting="Bienvenidos a la tienda!" />
-      </Box>
-    </ChakraProvider>
-  );
-};
+
+    return (
+      <ChakraProvider>
+        <MainLayout>
+          <ItemListContainer greeting="Bienvenidos a la tienda!" />
+        </MainLayout>
+      </ChakraProvider>
+    );
+}
 
 export default App;
