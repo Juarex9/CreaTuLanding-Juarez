@@ -6,7 +6,7 @@ const NavBar = () => {
             alignItems='center'
             justifyContent='space-between'
             padding='0 20px'
-            width='100vw'
+            width='100%'
             backgroundColor='#ada0a0'
             height="7%"
             border= "1px solid black"
@@ -14,7 +14,7 @@ const NavBar = () => {
             <Text className="test">Tienda de Agustin</Text>
             <Menu>
                 <MenuButton  as={Button} bg='#ada0a0'>
-                    Actions
+                    Categorias
                 </MenuButton>
                 <MenuList>
                     <MenuItem>Remeras</MenuItem>

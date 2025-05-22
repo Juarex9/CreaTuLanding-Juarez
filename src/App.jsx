@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, ChakraProvider } from '@chakra-ui/react';
-//import './App.css';
 import NavBar from './components/NavBar';
 import ItemListContainer from './components/ItemListContainer';
 
