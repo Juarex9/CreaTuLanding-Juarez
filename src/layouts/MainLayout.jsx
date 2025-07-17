@@ -1,12 +1,13 @@
 import { Box, Flex } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
+import { Outlet } from "react-router";
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
   return (
-    <Box height="100vh" width="100vw">
+    <Box minHeight="100vh" maxWidth="100vw" overflowX="hidden">
       <NavBar />
-      <Flex direction="column" height="calc(100vh - 64px)" width="100%">
-        {children}
+      <Flex direction="column" width="100%">
+        <Outlet />
       </Flex>
     </Box>
   );

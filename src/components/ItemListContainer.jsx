@@ -1,15 +1,16 @@
-import { Box, SimpleGrid, Flex, Heading, Image, Text } from "@chakra-ui/react";
-import { getAllProducts } from "../services/products.services";
-import { useEffect, useState } from "react";
+import { Box, SimpleGrid, Heading, Image, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
-const ItemCard = ({ image, title, description, price }) => {
+const ItemCard = ({ id, image, title, description, price }) => {
+    const navigate = useNavigate();
     return (
         <Box
             borderWidth={'1px'}
             borderRadius={'lg'}
             color={'black'}
             transition={'transform 0.3s, box-shadow 0.3s'}
-            _hover={{transform: "translateY(-5px)", boxShadow: "lg"}}
+            _hover={{ transform: "translateY(-5px)", boxShadow: "lg" }}
+            onClick={() => navigate(`/item/${id}`)}
         >
             <Image src={image} height={'200px'} width={'100%'} objectFit={'cover'} />
             <Box padding={'4'}>
@@ -22,27 +23,20 @@ const ItemCard = ({ image, title, description, price }) => {
 }
 
 
-const ItemListContainer = ({ greeting }) => {
-
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        getAllProducts().then((res) => {
-            setProducts(res.data.products);
-        });
-    }, []);
-
+const ItemListContainer = ({ products }) => {
     return (
-        <Box width={'100%'} overflowX={'hidden'} p={4}>
+        <Box maxWidth={'100%'} overflowX={'hidden'} p={4}>
             <SimpleGrid columns={{ lg: 6 }} spacing={4} width={'100%'}>
                 {products.map((product) => {
                     return (
                         <ItemCard
                             key={product.id}
+                            id={product.id}
                             image={product.thumbnail}
                             title={product.title}
                             description={product.description}
                             price={product.price}
+                            discount={product.discountPercentage}
                         />
                     );
                 })}

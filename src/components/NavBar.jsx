@@ -1,6 +1,20 @@
 import { Flex, MenuItem, Text, Menu, MenuList, Button, MenuButton} from "@chakra-ui/react";
 import Cartwidget from "./CartWidget";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { getAllCategories } from "../services/products.services";
+import { useState } from "react";
+
 const NavBar = () => {
+    const navigate = useNavigate();
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        getAllCategories()
+            .then((res) => setCategories(res.data))
+            .catch((error) => console.error(error));
+    }, []);
+
     return (
         <Flex
             alignItems='center'
@@ -11,17 +25,17 @@ const NavBar = () => {
             height="7%"
             border= "1px solid black"
         >
-            <Text className="test">Tienda de Agustin</Text>
+            <Text className="test" onClick={() => navigate("/")} cursor={"pointer"}>Tienda de Agustin</Text>
             <Menu>
                 <MenuButton  as={Button} bg='#ada0a0'>
                     Categorias
                 </MenuButton>
                 <MenuList>
-                    <MenuItem>Remeras</MenuItem>
-                    <MenuItem>Accesorios</MenuItem>
-                    <MenuItem>Pantalones</MenuItem>
-                    <MenuItem>Zapatillas</MenuItem>
-                    <MenuItem>Ofertas</MenuItem>
+                    {
+                        categories.map(item => {
+                            return <MenuItem key={item.slug} onClick={() => navigate(`/category/${item.slug}`)}>{item.name}</MenuItem>
+                        })  
+                    }
                 </MenuList>
             </Menu>
             <Cartwidget />
