@@ -1,6 +1,5 @@
 import ItemListContainer from '../components/ItemListContainer';
 import { useEffect, useState } from 'react';
-import { getAllProducts } from '../services/products.services';
 import {collection, getDocs} from 'firebase/firestore';
 import { db } from '../services/config/firebase';
 
@@ -11,16 +10,18 @@ const Home = () => {
 
     useEffect(() => {
         const productsCollection = collection(db, "products")
+
         getDocs(productsCollection).then((snapshot) => {
             const data = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data()
             }));
+            setProducts(data);
         })
         .catch(() => setError(true))
         .finally(() =>  setLoading(false));
     }, []);
-    
+
     ///renderizado condicional:
     if (loading) return <>Loading...</>;
     if (error) return <>Error loading products</>;

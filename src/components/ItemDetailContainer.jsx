@@ -36,9 +36,7 @@ const ItemDetailContainer = ({ product }) => {
                     <Image
                         rounded={'md'}
                         alt={'product image'}
-                        src={
-                            product.images[0]
-                        }
+                        src={product.images && product.images.length > 0 ? product.images[0] : ""}
                         fit={'cover'}
                         align={'center'}
                         w={'100%'}

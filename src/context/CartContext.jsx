@@ -33,8 +33,34 @@ export const CartProvider = ({ children }) => {
             );
         });
     };
+    const deleteProductFromCart = (itemId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+  };
 
-    return (
-        <CartContext.Provider value={{ cart, setCart, addToCart, removeFromCart }}>{children}</CartContext.Provider>
+  const getTotalCount = () => {
+    return cart.reduce((total, item) => Number(total) + item.cantidad, 0);
+  };
+
+  const getTotalPrice = () => {
+    const totalPrice = cart.reduce(
+      (total, item) => total + Number(item.price) * item.cantidad,
+      0
     );
+    return totalPrice;
+  };
+
+   return (
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        getTotalCount,
+        deleteProductFromCart,
+        getTotalPrice,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };

@@ -2,17 +2,24 @@ import { Flex, MenuItem, Text, Menu, MenuList, Button, MenuButton} from "@chakra
 import Cartwidget from "./CartWidget";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { getAllCategories } from "../services/products.services";
 import { useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../services/config/firebase";
 
 const NavBar = () => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        getAllCategories()
-            .then((res) => setCategories(res.data))
-            .catch((error) => console.error(error));
+        const categoriesCollection = collection(db, "categories");
+        getDocs(categoriesCollection).then((snapshot) => {
+            const data = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setCategories(data);
+        })
+        .catch(() => setError(true))
     }, []);
 
     return (
