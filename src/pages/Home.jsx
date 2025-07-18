@@ -1,26 +1,8 @@
 import ItemListContainer from '../components/ItemListContainer';
-import { useEffect, useState } from 'react';
-import {collection, getDocs} from 'firebase/firestore';
-import { db } from '../services/config/firebase';
+import { useProducts } from '../hooks/useProducts';
 
 const Home = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-
-    useEffect(() => {
-        const productsCollection = collection(db, "products")
-
-        getDocs(productsCollection).then((snapshot) => {
-            const data = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setProducts(data);
-        })
-        .catch(() => setError(true))
-        .finally(() =>  setLoading(false));
-    }, []);
+    const {products, loading, error} = useProducts();
 
     ///renderizado condicional:
     if (loading) return <>Loading...</>;
